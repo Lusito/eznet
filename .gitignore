@@ -1,0 +1,74 @@
+*.orig
+.vs/
+*.VC.*
+*vcxproj*
+*.sln
+
+### C++ ###
+#Prerequisites
+*.d
+
+#Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+#Precompiled Headers
+*.gch
+*.pch
+
+#Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+#Fortran module files
+*.mod
+*.smod
+
+#Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+#Executables
+*.exe
+*.out
+*.app
+bin/
+
+
+### CMake ###
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+
+### QT CREATOR ###
+*.config
+*.creator
+*.files
+*.includes
+*.user
+*.cbp
+*.autosave
+
+### Doxygen ###
+doc/
+
+
+### log ###
+*.log
+*.trace
+
+### clion ###
+.idea/
+
+### netbeans ###
+nbproject
+compile_commands.json

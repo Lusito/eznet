@@ -1,0 +1,4 @@
+[submodule "lib/enet"]
+	path = lib/enet
+	url = https://github.com/lsalzman/enet.git
+	ignore = untracked

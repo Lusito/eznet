@@ -1,0 +1,33 @@
+# comments start with a '#' sign, end with the next newline and can be placed anywhere.
+# indentation does not matter, but helps making it readable
+
+# you can add includes to the generated message_adapters.hpp for additional types needed
+include adapters "../src/custom_adapters.hpp"
+
+# and also to the generated messages.hpp
+include messages "../src/custom_messages.hpp"
+
+# message <MessageName> [flag]
+# (flag can be '!reliable' OR '!unsequenced')
+message Chat !reliable
+	#field <fieldName> <fieldType>
+	# (fieltype can be any c/c++ type or structs defined in this file.)
+    field command std::string
+
+# struct <MessageName>
+# (struct is like message, but can not be send without a message containing the struct)
+struct PlayerListEntry
+    field playerIndex uint8_t
+    field name std::string
+
+message HandshakeServer !reliable
+    field PlayerIndex uint8_t
+	# (field[] will become a std::vector of the specified type)
+    field[] playerList PlayerListEntry
+
+message HandshakeClient !reliable
+    field name std::string
+
+message MyCustom !reliable
+    field text std::string
+    field data MyCustomStruct
