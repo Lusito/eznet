@@ -29,8 +29,8 @@ namespace eznet {
 	const int MAX_DISCOVERY_MESSAGE_SIZE = 1024;
 	
 	bool init() {
-		static boolean initialized = false;
-		static boolean success = false;
+		static bool initialized = false;
+		static bool success = false;
 		if(!initialized) {
 			getTime();
 			atexit(enet_deinitialize);

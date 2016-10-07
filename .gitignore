@@ -72,3 +72,6 @@ doc/
 ### netbeans ###
 nbproject
 compile_commands.json
+
+#message gen
+message_generator

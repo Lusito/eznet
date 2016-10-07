@@ -22,6 +22,7 @@
 #include <memory.h>
 #include <stdint.h>
 #include <string>
+#include <type_traits>
 
 namespace eznet {
 	template <class _Ty>
