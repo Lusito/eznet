@@ -12,9 +12,9 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 #project files to compile
 file(GLOB_RECURSE SOURCE_FILES
- ${CMAKE_CURRENT_SOURCE_DIR}/include/eznet/*.hpp
- ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
- ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/eznet/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
 )
 add_library(eznet STATIC ${SOURCE_FILES})
 
