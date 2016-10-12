@@ -41,8 +41,8 @@ namespace eznet {
 		DiscoveryServer(const std::string& gameName);
 		~DiscoveryServer();
 
-		void getAvailableSlots(uint8_t availableSlots) {
-			availableSlots = availableSlots;
+		void setAvailableSlots(uint8_t availableSlots) {
+			this->availableSlots = availableSlots;
 		}
 
 		uint8_t getAvailableSlots() {

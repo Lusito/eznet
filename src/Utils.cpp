@@ -23,11 +23,6 @@
 #include <string>
 
 namespace eznet {
-	const std::string SERVER_MAGIC = "EZNET_SERVER";
-	const std::string CLIENT_MAGIC = "EZNET_DISCOVER";
-	const int MAX_HOSTNAME_LENGTH = 256;
-	const int MAX_DISCOVERY_MESSAGE_SIZE = 1024;
-	
 	bool init() {
 		static bool initialized = false;
 		static bool success = false;

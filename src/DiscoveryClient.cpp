@@ -22,16 +22,9 @@
 #include <eznet/Utils.hpp>
 #include <enet/enet.h>
 #include <string.h>
+#include "Constants.hpp"
 
 namespace eznet {
-	extern const std::string SERVER_MAGIC;
-	extern const std::string CLIENT_MAGIC;
-	extern const int MAX_HOSTNAME_LENGTH;
-	extern const int MAX_DISCOVERY_MESSAGE_SIZE;
-	// how much time to wait before broadcasting another request
-	const uint64_t RETRY_INTERVAL = 4000;
-	// how long it takes for a server to be removed from the list if it does not reply
-	const uint64_t SERVER_TIMEOUT_TIME = 30000;
 	
 	struct DiscoveryClientEnetData {
 		ENetSocket socket = ENET_SOCKET_NULL;

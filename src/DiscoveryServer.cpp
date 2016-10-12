@@ -21,13 +21,10 @@
 #include <eznet/Buffer.hpp>
 #include <enet/enet.h>
 #include <string.h>
+#include "Constants.hpp"
 
 
 namespace eznet {
-	extern const std::string SERVER_MAGIC;
-	extern const std::string CLIENT_MAGIC;
-	extern const int MAX_HOSTNAME_LENGTH;
-	extern const int MAX_DISCOVERY_MESSAGE_SIZE;
 	
 	struct DiscoveryServerEnetData {
 		ENetSocket socket = ENET_SOCKET_NULL;
