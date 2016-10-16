@@ -94,7 +94,7 @@ bool MessageGenerator::generateAdaptersHpp(const DefinitionConfig& config, const
 		file << "void writeMessage(BufferWriter& writer, const " << def.structName << "& message);" << std::endl;
 		file << "size_t getMessageSize(const " << def.structName << "& message);" << std::endl;
 		if(def.message) {
-			file << "ENetPacket* create_packet(BufferWriter& writer, const " << def.structName << "& message);" << std::endl;
+			file << "ENetPacket* createPacket(BufferWriter& writer, const " << def.structName << "& message);" << std::endl;
 		}
 	}
 	file << "}" << std::endl;
@@ -156,7 +156,7 @@ bool MessageGenerator::generateAdaptersCpp(const DefinitionConfig& config, const
 		file << "}" << std::endl;
 		
 		if(def.message) {
-			file << "ENetPacket* create_packet(BufferWriter& writer, const " << def.structName << "& message) {" << std::endl;
+			file << "ENetPacket* createPacket(BufferWriter& writer, const " << def.structName << "& message) {" << std::endl;
 			file << "\twriter.reset();" << std::endl;
 			file << "\twriter.write<MessageType>(" << def.structName << "::getType());" << std::endl;
 			file << "\twriteMessage(writer, message);" << std::endl;
