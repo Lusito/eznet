@@ -44,8 +44,9 @@ namespace eznet {
 			};
 		}
 		void handleEvent(uint16_t type, buffered_reader& reader, ENetEvent& event) const override {
-			assert(type >= 0 && type < MessageType::NUM_TYPES && callbacks[type]);
-			callbacks[type](reader, event);
+			assert(type >= 0 && type < MessageType::NUM_TYPES);
+			if(callbacks[type])
+				callbacks[type](reader, event);
 		}
 	};
 }
