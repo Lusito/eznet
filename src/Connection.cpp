@@ -105,15 +105,15 @@ namespace eznet {
 		enet_packet_destroy(event.packet);
 	}
 
-	bool ServerConnection::connect(const std::string& hostName, uint16_t port, int clients, int channels) {
+	bool ServerConnection::connect(const std::string& hostname, uint16_t port, int clients, int channels) {
 		if(state != ConnectionState::DISCONNECTED)
 			disconnectNow();
 
 		ENetAddress address;
-		if(hostName.empty())
+		if(hostname.empty())
 			address.host = ENET_HOST_ANY;
 		else
-			enet_address_set_host(&address, hostName.c_str());
+			enet_address_set_host(&address, hostname.c_str());
 		address.port = port;
 
 		host = enet_host_create(&address, clients, channels, 0, 0);
@@ -125,7 +125,7 @@ namespace eznet {
 
 	ClientConnection::ClientConnection() {}
 
-	bool ClientConnection::connect(const std::string& hostName, uint16_t port, int channels) {
+	bool ClientConnection::connect(const std::string& hostname, uint16_t port, int channels) {
 		if(state != ConnectionState::DISCONNECTED)
 			disconnectNow();
 
@@ -133,7 +133,7 @@ namespace eznet {
 		if(host == nullptr) return false;
 
 		ENetAddress address;
-		enet_address_set_host(&address, hostName.c_str());
+		enet_address_set_host(&address, hostname.c_str());
 		address.port = port;
 
 		peer = enet_host_connect(host, &address, channels, 0);

@@ -28,16 +28,16 @@ namespace eznet {
 	class ServerDescription {
 	private:
 		friend class DiscoveryClient;
-		std::string hostName;
-		std::string serverName;
+		std::string hostname;
+		std::string servername;
 		uint8_t maxSlots;
 		uint8_t availableSlots;
 		uint16_t port;
 		uint64_t lastSeen;
 
 	public:
-		const std::string& getHostname() const noexcept { return hostName; };
-		const std::string& getServerName() const noexcept { return serverName; };
+		const std::string& getHostname() const noexcept { return hostname; };
+		const std::string& getServername() const noexcept { return servername; };
 		uint8_t getMaxSlots() const noexcept { return maxSlots; };
 		uint8_t getAvailableSlots() const noexcept { return availableSlots; };
 		uint16_t getPort() const noexcept { return port; };
@@ -49,13 +49,13 @@ namespace eznet {
 	class DiscoveryClient {
 	protected:
 		std::unique_ptr<DiscoveryClientEnetData> enetData;
-		std::string gameName;
+		std::string gamename;
 		uint64_t lastSend = 0;
 		std::vector<ServerDescription> servers;
 		bool serversChanged = false;
 
 	public:
-		DiscoveryClient(const std::string& gameName);
+		DiscoveryClient(const std::string& gamename);
 		~DiscoveryClient();
 
 		const std::vector<ServerDescription>& getServers() {

@@ -30,16 +30,16 @@ namespace eznet {
 		ENetSocket socket = ENET_SOCKET_NULL;
 	};
 
-	DiscoveryServer::DiscoveryServer(const std::string& gameName)
-		: enetData(std::make_unique<DiscoveryServerEnetData>()), gameName(gameName) {
+	DiscoveryServer::DiscoveryServer(const std::string& gamename)
+		: enetData(std::make_unique<DiscoveryServerEnetData>()), gamename(gamename) {
 	}
 
 	DiscoveryServer::~DiscoveryServer() {
 		stop();
 	}
 
-	bool DiscoveryServer::start(uint16_t discoveryPort, const std::string& serverName_, uint16_t serverPort_, uint8_t maxSlots_) {
-		serverName = serverName_;
+	bool DiscoveryServer::start(uint16_t discoveryPort, const std::string& servername_, uint16_t serverPort_, uint8_t maxSlots_) {
+		servername = servername_;
 		serverPort = serverPort_;
 		maxSlots = maxSlots_;
 		availableSlots = maxSlots;
@@ -86,14 +86,14 @@ namespace eznet {
 		buffer.dataLength = ENET_PROTOCOL_MAXIMUM_MTU;
 		int receivedLength = enet_socket_receive (enetData->socket,&receivedAddress, &buffer, 1);
 		if(receivedLength > 0) {
-			char hostName[MAX_HOSTNAME_LENGTH];
-			int r = enet_address_get_host_ip (&receivedAddress, hostName, MAX_HOSTNAME_LENGTH);
+			char hostname[MAX_HOSTNAME_LENGTH];
+			int r = enet_address_get_host_ip (&receivedAddress, hostname, MAX_HOSTNAME_LENGTH);
 			if(r == 0) {
 				BufferReader reader(static_cast<uint8_t *>(buffer.data), buffer.dataLength);
 				std::string magic = reader.read<std::string>();
 				if(magic == CLIENT_MAGIC) {
-					std::string gameName = reader.read<std::string>();
-					if(gameName == gameName) {
+					std::string gamename = reader.read<std::string>();
+					if(gamename == gamename) {
 						sendReply(&receivedAddress);
 					}
 				}
@@ -107,8 +107,8 @@ namespace eznet {
 		ENetBuffer buffer;
 		BufferWriter writer(MAX_DISCOVERY_MESSAGE_SIZE);
 		writer.write<std::string>(SERVER_MAGIC);
-		writer.write<std::string>(gameName);
-		writer.write<std::string>(serverName);
+		writer.write<std::string>(gamename);
+		writer.write<std::string>(servername);
 		writer.write<uint8_t>(maxSlots);
 		writer.write<uint8_t>(availableSlots);
 		writer.write<uint16_t>(serverPort);

@@ -31,8 +31,8 @@ namespace eznet {
 		ENetAddress address;
 	};
 
-	DiscoveryClient::DiscoveryClient(const std::string &gameName)
-		: enetData(std::make_unique<DiscoveryClientEnetData>()), gameName(gameName) {
+	DiscoveryClient::DiscoveryClient(const std::string &gamename)
+		: enetData(std::make_unique<DiscoveryClientEnetData>()), gamename(gamename) {
 	}
 
 	DiscoveryClient::~DiscoveryClient() {
@@ -72,7 +72,7 @@ namespace eznet {
 		ENetBuffer buffer;
 		BufferWriter writer(MAX_DISCOVERY_MESSAGE_SIZE);
 		writer.write<std::string>(CLIENT_MAGIC);
-		writer.write<std::string>(gameName);
+		writer.write<std::string>(gamename);
 
 		buffer.data = writer.getData();
 		buffer.dataLength = writer.getPosition();
@@ -91,25 +91,25 @@ namespace eznet {
 		ENetAddress receivedAddress;
 		int receivedLength = enet_socket_receive (enetData->socket,&receivedAddress, &buffer, 1);
 		if(receivedLength > 0) {
-			char hostName[MAX_HOSTNAME_LENGTH];
-			int r = enet_address_get_host_ip (&receivedAddress, hostName, MAX_HOSTNAME_LENGTH);
+			char hostname[MAX_HOSTNAME_LENGTH];
+			int r = enet_address_get_host_ip (&receivedAddress, hostname, MAX_HOSTNAME_LENGTH);
 			if(r == 0) {
 				BufferReader reader(static_cast<uint8_t *>(buffer.data), buffer.dataLength);
 				std::string magic = reader.read<std::string>();
 				if(magic == SERVER_MAGIC) {
-					std::string otherGameName = reader.read<std::string>();
-					if(gameName == otherGameName) {
-						std::string serverName = reader.read<std::string>();
+					std::string gamename2 = reader.read<std::string>();
+					if(gamename == gamename2) {
+						std::string servername = reader.read<std::string>();
 						uint8_t maxSlots = reader.read<uint8_t>();
 						uint8_t availableSlots = reader.read<uint8_t>();
 						uint16_t serverPort = reader.read<uint16_t>();
 
 						bool found = false;
 						for(auto& server: servers) {
-							if (server.hostName == hostName && server.port == serverPort) {
+							if (server.hostname == hostname && server.port == serverPort) {
 								found = true;
-								if(server.serverName != serverName) {
-									server.serverName = serverName;
+								if(server.servername != servername) {
+									server.servername = servername;
 									serversChanged = true;
 								}
 								if(server.maxSlots != maxSlots) {
@@ -128,8 +128,8 @@ namespace eznet {
 							servers.emplace_back();
 							auto& server = servers.back();
 
-							server.hostName = hostName;
-							server.serverName = serverName;
+							server.hostname = hostname;
+							server.servername = servername;
 							server.port = serverPort;
 							server.maxSlots = maxSlots;
 							server.availableSlots = availableSlots;

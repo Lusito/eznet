@@ -90,7 +90,7 @@ namespace eznet {
 
 	class ServerConnection : public Connection {
 	public:
-		bool connect(const std::string& hostName, uint16_t port, int clients, int channels);
+		bool connect(const std::string& hostname, uint16_t port, int clients, int channels);
 	};
 
 	class ClientConnection : public Connection {
@@ -105,7 +105,7 @@ namespace eznet {
 			return peer;
 		}
 
-		bool connect(const std::string& hostName, uint16_t port, int channels);
+		bool connect(const std::string& hostname, uint16_t port, int channels);
 		bool update() override;
 		
 	protected:

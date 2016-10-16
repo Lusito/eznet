@@ -31,14 +31,14 @@ namespace eznet {
 	class DiscoveryServer {
 	protected:
 		std::unique_ptr<DiscoveryServerEnetData> enetData;
-		std::string gameName;
-		std::string serverName;
+		std::string gamename;
+		std::string servername;
 		uint8_t maxSlots = 0;
 		uint8_t availableSlots = 0;
 		uint16_t serverPort = 0;
 
 	public:
-		DiscoveryServer(const std::string& gameName);
+		DiscoveryServer(const std::string& gamename);
 		~DiscoveryServer();
 
 		void setAvailableSlots(uint8_t availableSlots) {
@@ -49,7 +49,7 @@ namespace eznet {
 			return availableSlots;
 		}
 
-		bool start(uint16_t discoveryPort, const std::string& serverName, uint16_t serverPort, uint8_t maxSlots);
+		bool start(uint16_t discoveryPort, const std::string& servername, uint16_t serverPort, uint8_t maxSlots);
 		void stop();
 		bool update();
 
