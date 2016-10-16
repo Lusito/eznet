@@ -18,9 +18,9 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************/
-#include <eznet/MessageHandlerBase.hpp>
 #include <stdint.h>
 #include <string>
+#include <memory>
 #include <functional>
 
 struct _ENetEvent;
@@ -35,25 +35,25 @@ typedef _ENetPeer ENetPeer;
 
 namespace eznet {
 
+	class ConnectHandler;
 	class MessageHandlerBase;
 	enum class ConnectionState : uint8_t { DISCONNECTED, CONNECTING, CONNECTED, DISCONNECTING };
 
 	class Connection {
 	protected:
-		using EventCallback = std::function<void(ENetEvent& event)>;
 		ENetHost* host = nullptr;
-		MessageHandlerBase* handler = nullptr;
+		std::shared_ptr<ConnectHandler> connectHandler;
+		std::shared_ptr<MessageHandlerBase> messageHandler;
 		ConnectionState state = ConnectionState::DISCONNECTED;
-		EventCallback connectCallback;
-		EventCallback disconnectCallback;
 
 	public:
 		Connection();
-		virtual ~Connection();
+		~Connection();
 
 		bool isConnected() {
 			return state == ConnectionState::CONNECTED;
 		}
+
 		bool isDisconnected() {
 			return state == ConnectionState::DISCONNECTED;
 		}
@@ -65,18 +65,16 @@ namespace eznet {
 		ENetHost* getHost() {
 			return host;
 		}
-		virtual void setHandler(MessageHandlerBase* handler_) {
-			handler = handler_;
+
+		void setConnectHandler(std::shared_ptr<ConnectHandler> handler) {
+			connectHandler = handler;
+		}
+
+		void setMessageHandler(std::shared_ptr<MessageHandlerBase> handler) {
+			messageHandler = handler;
 		}
 
 		virtual bool update();
-
-		virtual void setConnectCallback(EventCallback callback) {
-			connectCallback = callback;
-		}
-		virtual void setDisconnectCallback(EventCallback callback) {
-			disconnectCallback = callback;
-		}
 
 	protected:
 		virtual void disconnectInternal();

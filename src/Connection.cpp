@@ -18,12 +18,14 @@
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************/
 #include <eznet/Connection.hpp>
+#include <eznet/ConnectHandler.hpp>
+#include <eznet/MessageHandlerBase.hpp>
 #include <eznet/Utils.hpp>
 #include <enet/enet.h>
 
 namespace eznet {
 	
-	Connection::Connection() : host(nullptr), handler(nullptr) {
+	Connection::Connection() : host(nullptr) {
 	}
 	Connection::~Connection() {
 		disconnectNow();
@@ -86,8 +88,8 @@ namespace eznet {
 		}
 
 		// Notify listener
-		if(connectCallback)
-			connectCallback(event);
+		if(connectHandler)
+			connectHandler->onConnect(event);
 	}
 
 	void Connection::onDisconnect(ENetEvent& event) {
@@ -95,13 +97,13 @@ namespace eznet {
 			disconnectInternal();
 
 		// Notify listener
-		if(disconnectCallback)
-			disconnectCallback(event);
+		if(connectHandler)
+			connectHandler->onDisconnect(event);
 	}
 
 	void Connection::onReceive(ENetEvent& event) {
-		if(state == ConnectionState::CONNECTED && handler)
-			handler->handleMessage(event);
+		if(state == ConnectionState::CONNECTED && messageHandler)
+			messageHandler->handleMessage(event);
 		enet_packet_destroy(event.packet);
 	}
 
@@ -158,11 +160,12 @@ namespace eznet {
 			disconnectNow();
 
 			// Notify listener
-			ENetEvent event;
-			event.type = ENET_EVENT_TYPE_DISCONNECT;
-			event.peer = nullptr;
-			if(disconnectCallback)
-				disconnectCallback(event);
+			if(connectHandler) {
+				ENetEvent event;
+				event.type = ENET_EVENT_TYPE_DISCONNECT;
+				event.peer = nullptr;
+				connectHandler->onDisconnect(event);
+			}
 		}
 		return result;
 	}
