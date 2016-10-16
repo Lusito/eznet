@@ -34,7 +34,7 @@ namespace eznet {
 
 	public:
 		template <typename CT, typename MDT>
-		void setCallback(CT* const listener, HandlerCallback<CT, MDT> method) {
+		void putCallback(CT* const listener, HandlerCallback<CT, MDT> method) {
 			MessageType type = MDT::getType();
 			assert(type < MessageType::NUM_TYPES);
 			callbacks[static_cast<uint16_t>(type)] = [listener, method](BufferReader& reader, ENetEvent& event) {
@@ -43,6 +43,7 @@ namespace eznet {
 				(listener->*method)(message, event);
 			};
 		}
+
 		void handleEvent(uint16_t type, BufferReader& reader, ENetEvent& event) const override {
 			assert(type >= 0 && type < static_cast<uint16_t>(MessageType::NUM_TYPES));
 			if(callbacks[type])
