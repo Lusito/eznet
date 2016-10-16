@@ -6,7 +6,7 @@ typedef _ENetEvent ENetEvent;
 namespace eznet {
 	class ConnectHandler {
 	public:
-		virtual ~ConnectHandler();
+		virtual ~ConnectHandler() = default;
 		virtual void onConnect(ENetEvent& event) = 0;
 		virtual void onDisconnect(ENetEvent& event) = 0;
 	};
