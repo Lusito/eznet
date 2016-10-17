@@ -36,6 +36,8 @@ namespace eznet {
 		uint64_t lastSeen;
 
 	public:
+		std::string label;
+		
 		const std::string& getHostname() const noexcept { return hostname; };
 		const std::string& getServername() const noexcept { return servername; };
 		uint8_t getMaxSlots() const noexcept { return maxSlots; };

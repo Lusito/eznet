@@ -10,5 +10,5 @@ namespace eznet {
 	// how much time to wait before broadcasting another request
 	const uint64_t RETRY_INTERVAL = 4000;
 	// how long it takes for a server to be removed from the list if it does not reply
-	const uint64_t SERVER_TIMEOUT_TIME = 30000;
+	const uint64_t SERVER_TIMEOUT_TIME = 10000;
 }
